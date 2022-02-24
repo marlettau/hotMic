@@ -1,13 +1,25 @@
-const express = require("express");
+//IMPORTING
+const express = require('express');
 const app = express();
-const fs = require("fs");
+const port = 3000;
 
-app.get("/", function (req, res) {
-    res.sendFile(__dirname + "/index.html");
+
+//STATIC IMPORTING
+app.use(express.static('public'));
+app.use('/css', express.static(__dirname + 'public/css'));
+app.use('/javascript', express.static(__dirname + 'public/javascript'));
+app.use('/images', express.static(__dirname + 'public/images'));
+app.use('/videos', express.static(__dirname + 'public/videos'));
+
+app.set('views', './views');
+app.set('view engine', 'ejs');
+
+app.get('', (req, res) => {
+  res.render('index');
 });
 
- // more code will go in here just befor the listening function
+app.listen(port, () => console.info(`Listenting on port ${port}`));
 
-app.listen(3000, function () {
-    console.log("Listening on port 3000!");
+app.post('/api', (req, res) => {
+  console.log(req);
 });
